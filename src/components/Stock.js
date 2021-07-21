@@ -1,10 +1,10 @@
 import React from "react";
 
-function Stock({ stock }) {
+function Stock({ stock, onClickStock }) {
   const { id, ticker, name, type, price } = stock
-  
+
   return (
-    <div>
+    <div onClick={() => onClickStock(stock)} >
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">{name}</h5>
