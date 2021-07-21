@@ -6,6 +6,8 @@ import SearchBar from "./SearchBar";
 function MainContainer() {
   const [stocks, setStocks] = useState([])
   const [portfolio, setPortfolio] = useState([])
+  const [filter, setFilter] = useState("")
+  const [sort,setSort] = useState("")
 
   useEffect(() => {
     fetch("http://localhost:3001/stocks")
@@ -22,12 +24,21 @@ function MainContainer() {
     }
   }
 
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
+  }
+
+  const filteredStocks = stocks.filter(stock => {
+    if (filter === "") { return true} 
+    else {return stock.type === filter}
+  })
+
   return (
     <div>
-      <SearchBar />
+      <SearchBar onFilterChange={handleFilterChange} />
       <div className="row">
         <div className="col-8">
-          <StockContainer stocks={stocks} onClickStock={handleClickStock} />
+          <StockContainer stocks={filteredStocks} onClickStock={handleClickStock} />
         </div>
         <div className="col-4">
           <PortfolioContainer portfolio={portfolio} onClickStock={handleClickStock} />
